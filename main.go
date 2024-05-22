@@ -325,8 +325,8 @@ func main() {
 		// kzttext := "KZT"
 		newHS.CAValueAmount.CurrencyCode = String("KZT") //&kzttext
 		// ccli := "2022"
-		newHS.CAValueAmount.CurrencyCodeListId = String("2022") //&ccli
-		newHS.UnifiedGrossMassMeasure = strconv.FormatFloat(float64(declarationWeight), 'f', -1, 32)
+		newHS.CAValueAmount.CurrencyCodeListId = String("2022")                                                                      //&ccli
+		newHS.UnifiedGrossMassMeasure, _ = declaration_xlsx_file.GetCellValue("Накладная "+strconv.FormatInt(int64(i+1), 10), "D26") //strconv.FormatFloat(float64(declarationWeight), 'f', -1, 32)
 		newHS.TransportDocumentDetails.DocId, _ = declaration_xlsx_file.GetCellValue("Накладная "+strconv.FormatInt(int64(i+1), 10), "C2")
 		newHS.TransportDocumentDetails.DocCreationDate, _ = declaration_xlsx_file.GetCellValue("Накладная "+strconv.FormatInt(int64(i+1), 10), "C3")
 		newHS.HouseWaybillDetails.DocId, _ = declaration_xlsx_file.GetCellValue("Накладная "+strconv.FormatInt(int64(i+1), 10), "C5")
@@ -383,7 +383,9 @@ func main() {
 	ecd.RegisterDocumentIdDetails.RegistrationNumberId, _ = declaration_xlsx_file.GetCellValue("Общие сведения", "B10")
 	ecd.RegisterDocumentIdDetails.DocKindCode, _ = declaration_xlsx_file.GetCellValue("Общие сведения", "B8")
 	//declarationCost = float32(math.Round((float64(declarationCost * 100))) / 100)
-	ecd.ECGoodsShipmentDetails.CAValueAmount.Value = String(strconv.FormatFloat(float64(declarationCost), 'f', -1, 32))
+	formattedValue := fmt.Sprintf("%.2f", declarationCost)
+	ecd.ECGoodsShipmentDetails.CAValueAmount.Value = String(formattedValue)
+	//ecd.ECGoodsShipmentDetails.CAValueAmount.Value = String(strconv.FormatFloat(float64(declarationCost), 'f', -1, 32))
 	ecd.ECGoodsShipmentDetails.CAValueAmount.CurrencyCode = String("KZT")
 	ecd.ECGoodsShipmentDetails.CAValueAmount.CurrencyCodeListId = String("2022")
 	ecd.ECGoodsShipmentDetails.UnifiedGrossMassMeasure = strconv.FormatFloat(float64(declarationWeight), 'f', -1, 32)
