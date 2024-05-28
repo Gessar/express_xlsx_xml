@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/xml"
-	"flag"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,6 +11,7 @@ import (
 
 	"github.com/Gessar/express_xlsx_xml/internal/declaration"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/spf13/cobra"
 	"github.com/xuri/excelize/v2"
 )
 
@@ -134,21 +134,59 @@ func (m model) View() string {
 
 // menu_end
 func main() {
-	isRecreate := flag.Bool("r", false, "recreate")
-	isMenuDebug := flag.Bool("m", false, "menudebug")
-
-	flag.Parse()
-
-	if *isMenuDebug {
-		fmt.Println("Enter menu debug")
-		p := tea.NewProgram(initialModel())
-		if _, err := p.Run(); err != nil {
-			fmt.Printf("Alas, there's been an error: %v", err)
-			os.Exit(1)
-		}
-		os.Exit(0)
+	var isX, isY, isZ bool
+	var isRecreate bool
+	var rootCmd = &cobra.Command{
+		Use:   "app",
+		Short: "A brief description of your application",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("x is ", isX)
+			fmt.Println("y is ", isY)
+			fmt.Println("z is ", isZ)
+			fmt.Println("for create lists", isRecreate)
+			// fmt.Println("r is ", isRecreate)
+			// fmt.Println("m is ", isMenuDebug)
+			// fmt.Println("n is ", name)
+		},
 	}
+	rootCmd.Flags().BoolVarP(&isX, "x", "x", false, "is x")
+	rootCmd.Flags().BoolVarP(&isY, "y", "y", false, "is y")
+	rootCmd.Flags().BoolVarP(&isZ, "z", "z", false, "is z")
+	rootCmd.Flags().BoolVarP(&isRecreate, "recreate", "r", false, "for create lists")
 
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	// is_x := flag.Bool("x", false, "is x")
+	// is_y := flag.Bool("y", false, "is y")
+	// is_z := flag.Bool("z", false, "is z")
+	// isRecreate := flag.Bool("r", false, "recreate")
+	// isMenuDebug := flag.Bool("m", false, "menudebug")
+
+	// // flag.Parse()
+	// flag.CommandLine.Init(os.Args[0], flag.ContinueOnError)
+	// err := flag.CommandLine.Parse(filterCombinedFlags(os.Args[1:]))
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+
+	// fmt.Println("x is ", *is_x)
+	// fmt.Println("y is ", *is_y)
+	// fmt.Println("z is ", *is_z)
+
+	// if *isMenuDebug {
+	// 	fmt.Println("Enter menu debug")
+	// 	p := tea.NewProgram(initialModel())
+	// 	if _, err := p.Run(); err != nil {
+	// 		fmt.Printf("Alas, there's been an error: %v", err)
+	// 		os.Exit(1)
+	// 	}
+	// 	os.Exit(0)
+	// }
+
+	// os.Exit(0)
 	// Путь к файлу XLSX
 	filePath := "samplefile.xlsx"
 	var productOrder int = 0
@@ -178,7 +216,7 @@ func main() {
 	}
 	defer declaration_xlsx_file.Close()
 
-	if *isRecreate {
+	if isRecreate {
 		for i := 0; i <= 500; i++ {
 			s := "Накладная " + fmt.Sprint(i)
 			index, _ := declaration_xlsx_file.NewSheet(s)
