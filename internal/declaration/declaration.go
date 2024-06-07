@@ -3,20 +3,32 @@ package declaration
 import "encoding/xml"
 
 type ExpressCargoDeclaration struct {
-	XMLName                          xml.Name                        `xml:"ExpressCargoDeclaration"`
-	Xmlns                            string                          `xml:"xmlns,attr"`
-	XmlnsNs2                         string                          `xml:"xmlns:ns2,attr"`
-	XmlnsNs3                         string                          `xml:"xmlns:ns3,attr"`
-	XmlnsNs4                         string                          `xml:"xmlns:ns4,attr"`
-	XmlnsNs5                         string                          `xml:"xmlns:ns5,attr"`
-	ExpressRegistryKindCode          string                          `xml:"ns3:ExpressRegistryKindCode"`
-	DeclarationKindCode              string                          `xml:"ns3:DeclarationKindCode,omitempty"`
-	EDocIndicatorCode                string                          `xml:"ns3:EDocIndicatorCode"`
-	DeclarationFeatureCode           string                          `xml:"ns3:DeclarationFeatureCode,omitempty"`
-	RegisterDocumentIdDetails        RegisterDocumentIdDetail        `xml:"ns4:RegisterDocumentIdDetails"`
-	ExpressCargoDeclarationIdDetails ExpressCargoDeclarationIdDetail `xml:"ns4:ExpressCargoDeclarationIdDetails"`
-	ECGoodsShipmentDetails           ECGoodsShipmentDetail           `xml:"ns4:ECGoodsShipmentDetails,omitempty"`
-	SignatoryPersonV2Details         SignatoryPersonV2Detail         `xml:"ns4:SignatoryPersonV2Details"`
+	XMLName                          xml.Name                          `xml:"ExpressCargoDeclaration"`
+	Xmlns                            string                            `xml:"xmlns,attr"`
+	XmlnsNs2                         string                            `xml:"xmlns:ns2,attr"`
+	XmlnsNs3                         string                            `xml:"xmlns:ns3,attr"`
+	XmlnsNs4                         string                            `xml:"xmlns:ns4,attr"`
+	XmlnsNs5                         string                            `xml:"xmlns:ns5,attr"`
+	ExpressRegistryKindCode          string                            `xml:"ns3:ExpressRegistryKindCode"`
+	DeclarationKindCode              string                            `xml:"ns3:DeclarationKindCode,omitempty"`
+	CustomsProcedureCode             *CustomsProcedureCode             `xml:"ns3:CustomsProcedureCode,omitempty"`
+	PreviousCustomsProcedureModeCode *PreviousCustomsProcedureModeCode `xml:"ns3:PreviousCustomsProcedureModeCode,omitempty"`
+	EDocIndicatorCode                string                            `xml:"ns3:EDocIndicatorCode"`
+	DeclarationFeatureCode           string                            `xml:"ns3:DeclarationFeatureCode,omitempty"`
+	RegisterDocumentIdDetails        RegisterDocumentIdDetail          `xml:"ns4:RegisterDocumentIdDetails"`
+	ExpressCargoDeclarationIdDetails ExpressCargoDeclarationIdDetail   `xml:"ns4:ExpressCargoDeclarationIdDetails"`
+	ECGoodsShipmentDetails           ECGoodsShipmentDetail             `xml:"ns4:ECGoodsShipmentDetails,omitempty"`
+	SignatoryPersonV2Details         SignatoryPersonV2Detail           `xml:"ns4:SignatoryPersonV2Details"`
+}
+
+type CustomsProcedureCode struct {
+	CodeListId string `xml:"codeListId,attr,omitempty"`
+	Value      string `xml:",chardata"`
+}
+
+type PreviousCustomsProcedureModeCode struct {
+	CodeListId string `xml:"codeListId,attr,omitempty"`
+	Value      string `xml:",chardata"`
 }
 
 type RegisterDocumentIdDetail struct { //15
@@ -116,14 +128,31 @@ type CommunicationDetail struct {
 }
 
 type ECGoodsItemDetail struct {
-	ConsignmentItemOrdinal  string             `xml:"ns3:ConsignmentItemOrdinal"`       //14.3.6.1
-	HMConsignmentItemNumber string             `xml:"ns3:HMConsignmentItemNumber"`      //14.3.6.7
-	CommodityCode           string             `xml:"ns2:CommodityCode"`                //14.3.6.2
-	UnifiedGrossMassMeasure string             `xml:"ns2:UnifiedGrossMassMeasure"`      //14.3.6.4
-	GoodsMeasureDetails     GoodsMeasureDetail `xml:"ns4:GoodsMeasureDetails"`          //14.3.6.6
-	GoodsDescriptionText    string             `xml:"ns3:GoodsDescriptionText"`         //14.3.6.3
-	CAValueAmount           []CurrencyValue    `xml:"ns3:CAValueAmount"`                //14.3.6.6.11
-	CustomsValueAmount      *CurrencyValue     `xml:"ns3:CustomsValueAmount,omitempty"` //14.3.6.12(11)
+	ConsignmentItemOrdinal  string                `xml:"ns3:ConsignmentItemOrdinal"`          //14.3.6.1
+	HMConsignmentItemNumber string                `xml:"ns3:HMConsignmentItemNumber"`         //14.3.6.7
+	CommodityCode           string                `xml:"ns2:CommodityCode"`                   //14.3.6.2
+	UnifiedGrossMassMeasure string                `xml:"ns2:UnifiedGrossMassMeasure"`         //14.3.6.4
+	GoodsMeasureDetails     GoodsMeasureDetail    `xml:"ns4:GoodsMeasureDetails"`             //14.3.6.6
+	GoodsDescriptionText    string                `xml:"ns3:GoodsDescriptionText"`            //14.3.6.3
+	CAValueAmount           []CurrencyValue       `xml:"ns3:CAValueAmount"`                   //14.3.6.6.11
+	CustomsValueAmount      *CurrencyValue        `xml:"ns3:CustomsValueAmount,omitempty"`    //14.3.6.12(11)
+	ECPresentedDocDetails   ECPresentedDocDetails `xml:"ns4:ECPresentedDocDetails,omitempty"` //14.3.6.14
+}
+
+type ECPresentedDocDetails struct {
+	DocKindCode               DocKindCode               `xml:"ns2:DocKindCode"`                  //14.3.6.14.1
+	DocId                     string                    `xml:"ns2:DocId,omitempty"`              //14.3.6.14.3
+	DocCreationDate           string                    `xml:"ns2:DocCreationDate,omitempty"`    //14.3.6.14.4
+	DocStartDate              string                    `xml:"ns2:DocStartDate,omitempty"`       //14.3.6.14.5
+	DocValidityDate           string                    `xml:"ns2:DocValidityDate,omitempty"`    //14.3.6.14.6
+	UnifiedCountryCode        UnifiedCountryCode        `xml:"ns2:UnifiedCountryCode,omitempty"` //14.3.6.14.7
+	AuthorityName             string                    `xml:"ns2:AuthorityName,omitempty"`      //14.3.6.14.8
+	AuthorityId               string                    `xml:"ns2:AuthorityId,omitempty"`        //14.3.6.14.9
+	DocumentPresentingDetails DocumentPresentingDetails `xml:"ns4:DocumentPresentingDetails"`    //14.3.6.14.14
+}
+
+type DocumentPresentingDetails struct {
+	DocPresentKindCode string `xml:"ns3:DocPresentKindCode"` //14.3.6.14.14.1
 }
 
 type GoodsMeasureDetail struct {
@@ -177,3 +206,8 @@ type PoadDocKindCode struct {
 	CodeListId string `xml:"codeListId,attr"`
 	Value      string `xml:",chardata"`
 }
+
+//cacdo - ns4
+//casdo - ns3
+//csdo - ns2
+//ccdo - ns5
