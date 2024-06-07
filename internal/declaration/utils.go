@@ -61,6 +61,7 @@ func ReadGoodsItemDetail(itemCount int, xlsx *excelize.File) ECGoodsItemDetail {
 	good.GoodsDescriptionText = GetCellValue("Накладная", "AX"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	good.UnifiedGrossMassMeasure = GetCellValue("Накладная", "BA"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	good.GoodsMeasureDetails.GoodsMeasure.Value = GetCellValue("Накладная", "AZ"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
+	good.GoodsMeasureDetails.GoodsMeasure.MeasurementUnitCode = "796"
 	good.HMConsignmentItemNumber = GetCellValue("Накладная", "AW"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	fcostcurrency := GetCellValue("Накладная", "BB"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	fcostvalue := GetCellValue("Накладная", "BC"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
@@ -89,6 +90,7 @@ func ReadGoodsItemDetail(itemCount int, xlsx *excelize.File) ECGoodsItemDetail {
 
 func ReadECHouseShipmentDetail(itemCount int, xlsx *excelize.File) ECHouseShipmentDetail {
 	hsd := ECHouseShipmentDetail{}
+	hsd.ObjectOrdinal = GetCellValue("Накладная", "A"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	hsd.TransportDocumentDetails.DocId = GetCellValue("Накладная", "B"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	hsd.TransportDocumentDetails.DocCreationDate = GetCellValue("Накладная", "C"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
 	hsd.HouseWaybillDetails.DocId = GetCellValue("Накладная", "D"+strconv.FormatInt(int64(itemCount+5), 10), xlsx)
@@ -144,13 +146,9 @@ func SumHsdCAValueAmount(ehsp *ECHouseShipmentDetail) {
 		ehspCAValueAmount += value                                        //Суммируем
 	}
 
-	if ehspCAValueAmount < 0.001 {
-		strValue := fmt.Sprintf("%.6f", ehspCAValueAmount)
-		ehsp.CAValueAmount.Value = &strValue
-	} else {
-		strValue := fmt.Sprintf("%.3f", ehspCAValueAmount)
-		ehsp.CAValueAmount.Value = &strValue
-	}
+	strValue := fmt.Sprintf("%.2f", ehspCAValueAmount)
+	ehsp.CAValueAmount.Value = &strValue
+
 	// return *ehsp.CAValueAmount.Value
 }
 
@@ -182,7 +180,7 @@ func SumEcdCAValueAmount(ecd *ECGoodsShipmentDetail) {
 		fmt.Println("ecdUnifiedGrossMassMeasure of ", i, "is ", ecdUnifiedGrossMassMeasure)
 		ecdUnifiedGrossMassMeasure += UnifiedGrossMassMeasure
 	}
-	strCAValueAmount := fmt.Sprintf("%.3f", ehspCAValueAmount)
+	strCAValueAmount := fmt.Sprintf("%.2f", ehspCAValueAmount)
 	ecd.CAValueAmount.Value = &strCAValueAmount
 	if ecdUnifiedGrossMassMeasure < 0.001 {
 		strUnifiedGrossMassMeasure := fmt.Sprintf("%.6f", ecdUnifiedGrossMassMeasure)
@@ -191,10 +189,6 @@ func SumEcdCAValueAmount(ecd *ECGoodsShipmentDetail) {
 		strUnifiedGrossMassMeasure := fmt.Sprintf("%.3f", ecdUnifiedGrossMassMeasure)
 		ecd.UnifiedGrossMassMeasure = strUnifiedGrossMassMeasure
 	}
-}
-
-func UnifiedGrossMassMeasure(ecd *ECGoodsShipmentDetail) {
-
 }
 
 // func SetECHouseShipmentDetail() declaration.ECHouseShipmentDetail {

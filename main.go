@@ -12,7 +12,6 @@ import (
 
 	"github.com/Gessar/express_xlsx_xml/internal/declaration"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/spf13/cobra"
 	"github.com/xuri/excelize/v2"
 )
 
@@ -135,35 +134,35 @@ func (m model) View() string {
 
 // menu_end
 func main() {
-	var isX, isY, isZ, isMenu bool //debug
-	var isRecreate bool
-	var isCopy bool
-	// var listsCount int
-	var rootCmd = &cobra.Command{
-		Use:   "app",
-		Short: "A brief description of your application",
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("x is ", isX)
-			fmt.Println("y is ", isY)
-			fmt.Println("z is ", isZ)
-			fmt.Println("for create lists", isRecreate)
-			fmt.Println("for local copy template", isCopy)
-			// fmt.Println("r is ", isRecreate)
-			// fmt.Println("m is ", isMenuDebug)
-			// fmt.Println("n is ", name)
-		},
-	}
-	rootCmd.Flags().BoolVarP(&isX, "x", "x", false, "is x")
-	rootCmd.Flags().BoolVarP(&isY, "y", "y", false, "is y")
-	rootCmd.Flags().BoolVarP(&isZ, "z", "z", false, "is z")
-	rootCmd.Flags().BoolVarP(&isMenu, "menu", "m", false, "is menu")
-	rootCmd.Flags().BoolVarP(&isRecreate, "recreate", "r", false, "for create lists")
-	rootCmd.Flags().BoolVarP(&isCopy, "copy", "c", false, "for local copy")
+	// var isX, isY, isZ, isMenu bool //debug
+	// var isRecreate bool
+	// var isCopy bool
+	// // var listsCount int
+	// var rootCmd = &cobra.Command{
+	// 	Use:   "app",
+	// 	Short: "A brief description of your application",
+	// 	Run: func(cmd *cobra.Command, args []string) {
+	// 		fmt.Println("x is ", isX)
+	// 		fmt.Println("y is ", isY)
+	// 		fmt.Println("z is ", isZ)
+	// 		fmt.Println("for create lists", isRecreate)
+	// 		fmt.Println("for local copy template", isCopy)
+	// 		// fmt.Println("r is ", isRecreate)
+	// 		// fmt.Println("m is ", isMenuDebug)
+	// 		// fmt.Println("n is ", name)
+	// 	},
+	// }
+	// rootCmd.Flags().BoolVarP(&isX, "x", "x", false, "is x")
+	// rootCmd.Flags().BoolVarP(&isY, "y", "y", false, "is y")
+	// rootCmd.Flags().BoolVarP(&isZ, "z", "z", false, "is z")
+	// rootCmd.Flags().BoolVarP(&isMenu, "menu", "m", false, "is menu")
+	// rootCmd.Flags().BoolVarP(&isRecreate, "recreate", "r", false, "for create lists")
+	// rootCmd.Flags().BoolVarP(&isCopy, "copy", "c", false, "for local copy")
 
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	// if err := rootCmd.Execute(); err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
 	// is_x := flag.Bool("x", false, "is x")
 	// is_y := flag.Bool("y", false, "is y")
 	// is_z := flag.Bool("z", false, "is z")
@@ -182,21 +181,21 @@ func main() {
 	// fmt.Println("y is ", *is_y)
 	// fmt.Println("z is ", *is_z)
 
-	if isMenu {
-		fmt.Println("Enter menu debug")
-		p := tea.NewProgram(initialModel())
-		if _, err := p.Run(); err != nil {
-			fmt.Printf("Alas, there's been an error: %v", err)
-			os.Exit(1)
-		}
-		os.Exit(0)
-	}
+	// if isMenu {
+	// 	fmt.Println("Enter menu debug")
+	// 	p := tea.NewProgram(initialModel())
+	// 	if _, err := p.Run(); err != nil {
+	// 		fmt.Printf("Alas, there's been an error: %v", err)
+	// 		os.Exit(1)
+	// 	}
+	// 	os.Exit(0)
+	// }
 
-	// os.Exit(0)
-	// Путь к файлу XLSX
-	if !isX {
-		log.SetOutput(io.Discard)
-	}
+	// // os.Exit(0)
+	// // Путь к файлу XLSX
+	// if !isX {
+	// 	log.SetOutput(io.Discard)
+	// }
 
 	filePathOld := "samplefile.xlsx"
 	filePathNew := "template.xlsx"
@@ -211,21 +210,21 @@ func main() {
 	ecd.XmlnsNs4 = "urn:EEC:M:CA:ComplexDataObjects:v1.8.1"
 	ecd.XmlnsNs5 = "urn:EEC:M:ComplexDataObjects:v0.4.14"
 
-	if isCopy {
-		err := os.Remove("samplefile.xlsx")
-		if err != nil {
-			log.Fatal(err)
-		}
-		data, err := os.ReadFile("samplefile_copy.xlsx")
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = os.WriteFile("samplefile.xlsx", data, 0644)
-		if err != nil {
-			log.Fatal(err)
-		}
-		os.Exit(0)
-	}
+	// if isCopy {
+	// 	err := os.Remove("samplefile.xlsx")
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	data, err := os.ReadFile("samplefile_copy.xlsx")
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	err = os.WriteFile("samplefile.xlsx", data, 0644)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	os.Exit(0)
+	// }
 
 	// Проверяем, существует ли файл шаблона
 	if _, err := os.Stat(filePathOld); os.IsNotExist(err) {
@@ -252,10 +251,10 @@ func main() {
 		return
 
 	}
-	if isRecreate {
-		declaration.AddLists(declaration_xlsx_file, filePathOld, 5)
-		os.Exit(1)
-	}
+	// if isRecreate {
+	// 	declaration.AddLists(declaration_xlsx_file, filePathOld, 5)
+	// 	os.Exit(1)
+	// }
 
 	// Вид декларации для экспресс-грузов
 	// ecd.ExpressRegistryKindCode, _ = declaration_xlsx_file.GetCellValue("Общие сведения", "E1")
@@ -364,6 +363,8 @@ func main() {
 			declaration.SumHsdUnifiedGrossMassMeasure(&ehsp)
 			ecd.ECGoodsShipmentDetails.ECHouseShipmentDetails = append(ecd.ECGoodsShipmentDetails.ECHouseShipmentDetails, ehsp) //Добавляем накладную к декларации
 			ehsp = declaration.ReadECHouseShipmentDetail(i, declaration_xlsx_file)                                              //Считаем новые данные накладной
+		} else if i == 1 {
+			ehsp = declaration.ReadECHouseShipmentDetail(i, declaration_xlsx_file)
 		}
 
 		ehsp.ECGoodsItemDetails = append(ehsp.ECGoodsItemDetails, git) //Добавляем товар в накладную
