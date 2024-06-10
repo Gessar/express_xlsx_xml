@@ -1,3 +1,15 @@
-samplefile.xlsx
+# Игнорировать все XML файлы
 *.xml
+
+# Игнорировать все EXE файлы
 *.exe
+
+# Игнорировать все XLSX файлы, кроме template.xlsx и samplefile.xlsx
+*.xlsx
+!template.xlsx
+!samplefile.xlsx
+
+*.zip
+
+ico.ico
+ico.png
