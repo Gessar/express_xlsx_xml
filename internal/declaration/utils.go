@@ -138,6 +138,103 @@ func ReadECHouseShipmentDetail(itemCount int, xlsx *excelize.File) ECHouseShipme
 	return hsd
 }
 
+func ReadECGoodsShipmentDetails(ecd *ExpressCargoDeclaration, xlsx *excelize.File) {
+	ecd.ExpressRegistryKindCode = GetCellValue("Общие сведения", "E1", xlsx)
+	// Тип декларации
+	ecd.DeclarationKindCode = GetCellValue("Общие сведения", "D1", xlsx)
+	// Код таможенного органа
+	ecd.ExpressCargoDeclarationIdDetails.CustomsOfficeCode = GetCellValue("Общие сведения", "H1", xlsx)
+	ecd.DeclarationFeatureCode = GetCellValue("Общие сведения", "W1", xlsx)
+	// Регистрационный номер юридического лица при включении в реестр
+	ecd.RegisterDocumentIdDetails.RegistrationNumberId = GetCellValue("Общие сведения", "AC15", xlsx)
+	// Код вида документа
+	ecd.RegisterDocumentIdDetails.DocKindCode = GetCellValue("Общие сведения", "AA15", xlsx)
+	ecd.ECGoodsShipmentDetails.CAValueAmount.Value = func() *string {
+		str := "0.00"
+		return &str
+	}()
+	ecd.ECGoodsShipmentDetails.CAValueAmount.CurrencyCode = String("KZT")
+	ecd.ECGoodsShipmentDetails.CAValueAmount.CurrencyCodeListId = String("2022")
+	ecd.ECGoodsShipmentDetails.UnifiedGrossMassMeasure = "0.000"
+	ecd.ExpressRegistryKindCode = GetCellValue("Общие сведения", "E1", xlsx)
+	ecd.DeclarationKindCode = GetCellValue("Общие сведения", "D1", xlsx)
+	ecd.ExpressCargoDeclarationIdDetails.CustomsOfficeCode = GetCellValue("Общие сведения", "H1", xlsx)
+	ecd.DeclarationFeatureCode = GetCellValue("Общие сведения", "W1", xlsx)
+	ecd.RegisterDocumentIdDetails.RegistrationNumberId = GetCellValue("Общие сведения", "AC15", xlsx)
+	ecd.RegisterDocumentIdDetails.DocKindCode = GetCellValue("Общие сведения", "AA15", xlsx)
+	ecd.ECGoodsShipmentDetails.CAValueAmount.Value = func() *string {
+		str := "0.00"
+		return &str
+	}()
+	ecd.ECGoodsShipmentDetails.CAValueAmount.CurrencyCode = func() *string {
+		str := "KZT"
+		return &str
+	}()
+	ecd.ECGoodsShipmentDetails.CAValueAmount.CurrencyCodeListId = func() *string {
+		str := "2022"
+		return &str
+	}()
+	ecd.ECGoodsShipmentDetails.UnifiedGrossMassMeasure = func() string {
+		str := "0.000"
+		return str
+	}()
+	ecd.SignatoryPersonV2Details.SigningDetails.FullNameDetails.FirstName = GetCellValue("Общие сведения", "A15", xlsx)
+	ecd.SignatoryPersonV2Details.SigningDetails.FullNameDetails.LastName = GetCellValue("Общие сведения", "E15", xlsx)
+	ecd.SignatoryPersonV2Details.SigningDetails.FullNameDetails.MiddleName = GetCellValue("Общие сведения", "C15", xlsx)
+	ecd.SignatoryPersonV2Details.SigningDetails.PositionName = GetCellValue("Общие сведения", "G15", xlsx)
+	ecd.SignatoryPersonV2Details.SigningDetails.CommunicationDetails.CommunicationChannelCode = GetCellValue("Общие сведения", "J15", xlsx)
+	ecd.SignatoryPersonV2Details.SigningDetails.CommunicationDetails.CommunicationChannelName = GetCellValue("Общие сведения", "K15", xlsx)
+	ecd.SignatoryPersonV2Details.SigningDetails.CommunicationDetails.CommunicationChannelId = GetCellValue("Общие сведения", "M15", xlsx)
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.UnifiedCountryCode.Value = GetCellValue("Общие сведения", "O15", xlsx)
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.IdentityDocKindCode.Value = GetCellValue("Общие сведения", "P15", xlsx)
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.UnifiedCountryCode.CodeListId = "2021"
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.IdentityDocKindCode.CodeListId = "2053"
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.DocKindName = GetCellValue("Общие сведения", "R15", xlsx)
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.DocSeriesId = GetCellValue("Общие сведения", "S15", xlsx)
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.DocId = GetCellValue("Общие сведения", "T15", xlsx)
+	ecd.SignatoryPersonV2Details.IdentityDocV3Details.DocCreationDate = GetCellValue("Общие сведения", "U15", xlsx)
+	ecd.EDocIndicatorCode = "ЭД"
+	ecd.SignatoryPersonV2Details.PowerOfAttorneyDetails.DocKindCode.CodeListId = "2009"
+	ecd.SignatoryPersonV2Details.PowerOfAttorneyDetails.DocKindCode.Value = GetCellValue("Общие сведения", "V15", xlsx)
+	ecd.SignatoryPersonV2Details.PowerOfAttorneyDetails.DocId = GetCellValue("Общие сведения", "W15", xlsx)
+	ecd.SignatoryPersonV2Details.PowerOfAttorneyDetails.DocCreationDate = GetCellValue("Общие сведения", "X15", xlsx)
+	ecd.SignatoryPersonV2Details.PowerOfAttorneyDetails.DocStartDate = GetCellValue("Общие сведения", "Y15", xlsx)
+	ecd.SignatoryPersonV2Details.PowerOfAttorneyDetails.DocValidityDate = GetCellValue("Общие сведения", "Z15", xlsx)
+	//
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectName = GetCellValue("Общие сведения", "A6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectBriefName = GetCellValue("Общие сведения", "B6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.TaxpayerId = GetCellValue("Общие сведения", "C6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.AddressKindCode = GetCellValue("Общие сведения", "E6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.UnifiedCountryCode.Value = GetCellValue("Общие сведения", "F6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.UnifiedCountryCode.CodeListId = "2021"
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.RegionName = GetCellValue("Общие сведения", "G6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.DistrictName = GetCellValue("Общие сведения", "H6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.CityName = GetCellValue("Общие сведения", "I6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.SettlementName = GetCellValue("Общие сведения", "J6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.StreetName = GetCellValue("Общие сведения", "K6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.BuildingNumberId = GetCellValue("Общие сведения", "L6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.SubjectAddressDetails.RoomNumberId = GetCellValue("Общие сведения", "M6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.CommunicationDetails.CommunicationChannelCode = GetCellValue("Общие сведения", "N6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.CommunicationDetails.CommunicationChannelName = GetCellValue("Общие сведения", "O6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsignorDetails.CommunicationDetails.CommunicationChannelId = GetCellValue("Общие сведения", "P6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectName = GetCellValue("Общие сведения", "Q6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectBriefName = GetCellValue("Общие сведения", "R6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.TaxpayerId = GetCellValue("Общие сведения", "S6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.AddressKindCode = GetCellValue("Общие сведения", "U6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.UnifiedCountryCode.Value = GetCellValue("Общие сведения", "V6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.UnifiedCountryCode.CodeListId = "2021"
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.RegionName = GetCellValue("Общие сведения", "W6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.DistrictName = GetCellValue("Общие сведения", "X6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.CityName = GetCellValue("Общие сведения", "Y6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.SettlementName = GetCellValue("Общие сведения", "Z6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.StreetName = GetCellValue("Общие сведения", "AA6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.BuildingNumberId = GetCellValue("Общие сведения", "AB6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.SubjectAddressDetails.RoomNumberId = GetCellValue("Общие сведения", "AC6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.CommunicationDetails.CommunicationChannelCode = GetCellValue("Общие сведения", "AD6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.CommunicationDetails.CommunicationChannelName = GetCellValue("Общие сведения", "AE6", xlsx)
+	ecd.ECGoodsShipmentDetails.ConsigneeDetails.CommunicationDetails.CommunicationChannelId = GetCellValue("Общие сведения", "AF6", xlsx)
+}
+
 func SumHsdCAValueAmount(ehsp *ECHouseShipmentDetail) {
 	var ehspCAValueAmount float64                   //Итого стоимость по декларации
 	for _, goods := range ehsp.ECGoodsItemDetails { //Проходим по товарам
