@@ -35,6 +35,15 @@ func downloadFile(url, filepath string) error {
 	return nil
 }
 
+func counter() {
+	i := 0
+	for {
+		// fmt.Println(i)
+		time.Sleep(time.Second * 1)
+		i++
+	}
+}
+
 func main() {
 
 	filePathOld := "samplefile.xlsx"
@@ -143,4 +152,9 @@ func main() {
 	declaration.WriteToFile(outputFile, outputstring)
 
 	fmt.Printf("XML файл успешно создан: %s\n", outputFile)
+	fmt.Println("Created by Gessar")
+	fmt.Println("https://github.com/Gessar/express_xlsx_xml")
+	go counter()
+	fmt.Print("Press 'Enter' to exit...")
+	fmt.Scanln()
 }
